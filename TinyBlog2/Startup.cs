@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace TinyBlog2
 {
@@ -28,6 +29,7 @@ namespace TinyBlog2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             // 添加swaggerAPI文档生成工具
             services.AddSwaggerGen(c =>
             {
@@ -54,6 +56,11 @@ namespace TinyBlog2
                 options.AddPolicy("VipOnly", policy => policy.RequireClaim("Role", "VipUser"));
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.Configure<FormOptions>(option =>
+            {
+                option.BufferBody = true;
+                option.BufferBodyLengthLimit = int.MaxValue;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

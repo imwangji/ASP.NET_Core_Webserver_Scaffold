@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using TinyBlog2.Areas.Identity.Data;
-using TinyBlog2.DTO;
+using TinyBlog2.Model;
 
 namespace TinyBlog2.Controllers
 {

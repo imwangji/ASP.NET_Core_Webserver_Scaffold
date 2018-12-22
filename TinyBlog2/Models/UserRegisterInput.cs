@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TinyBlog2.DTO
+namespace TinyBlog2.Model
 {
     public class UserRegisterInput
     {
