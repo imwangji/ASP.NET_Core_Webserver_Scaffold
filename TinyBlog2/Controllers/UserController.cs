@@ -32,10 +32,10 @@ namespace TinyBlog2.Controllers
         [Route("Reg")]
         public async Task<IActionResult> Post([FromBody] UserRegisterInput Input)
         {
-            var user = new TinyBlog2User { UserName = Input.UserName, Email = Input.Email };
+            var user = new TinyBlog2User { UserName = Input.UserName, Email = Input.Email};
             var result = await _userManager.CreateAsync(user, Input.Password);
             //给用户增加一个Claim
-            var addClaimResult = await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("Role", "VipUser"));
+            var addClaimResult = await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("Role", "DefaultUser"));
             if (result.Succeeded && addClaimResult.Succeeded)
             {
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
