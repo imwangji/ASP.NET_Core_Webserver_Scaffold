@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>1f73c9b1-fefb-44ab-84f2-1dc92a8d0816</UserSecretsId>
+    <AssemblyName>TinyBlog2</AssemblyName>
+    <RootNamespace>TinyBlog2</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
