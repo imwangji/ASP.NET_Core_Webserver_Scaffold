@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Http.Features;
+using TinyBlog2.Middleware;
 
 namespace TinyBlog2
 {
@@ -78,6 +79,7 @@ namespace TinyBlog2
             {
                 app.UseHsts();
             }
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseHttpsRedirection();

@@ -28,12 +28,21 @@ namespace TinyBlog2.Controllers
             _signInManager = signInManager;
             _userManager = userManager;
         }
+        /// <summary>
+        /// 用户只需要传入Email和Password，UserName是Identity必须要求的，此时用Email来填充UserName
+        /// </summary>
+        /// <param name="Input"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Reg")]
         public async Task<IActionResult> Post([FromBody] UserRegisterInput Input)
         {
-            var user = new TinyBlog2User { UserName = Input.UserName, Email = Input.Email};
-            var result = await _userManager.CreateAsync(user, Input.Password);
+            TinyBlog2User user = new TinyBlog2User { UserName = Input.Email, Email = Input.Email};
+            IdentityResult result = await _userManager.CreateAsync(user, Input.Password);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
             //给用户增加一个Claim
             var addClaimResult = await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("Role", "DefaultUser"));
             if (result.Succeeded && addClaimResult.Succeeded)
@@ -58,6 +67,7 @@ namespace TinyBlog2.Controllers
         /// <summary>
         /// 前后端分离，前端的登录请求发送到这里。
         /// 返回200或者401，代表登录成功和失败，如果登录成功，返回一个token。
+        /// 用户登录的Email就是UserName
         /// </summary>
         /// <param name="inputUser"></param>
         /// <returns>
@@ -68,7 +78,7 @@ namespace TinyBlog2.Controllers
         public async Task<IActionResult> Login([FromBody]UserLoginInput inputUser)
         {
             //拿到用户名和密码，用asp.net Core 自带的Identity来进行登录
-            var result = await _signInManager.PasswordSignInAsync(inputUser.UserName, inputUser.Password, inputUser.RememberMe, lockoutOnFailure: true);
+            Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(inputUser.Email, inputUser.Password, inputUser.RememberMe, lockoutOnFailure: true);
             if (result.Succeeded)
             {
                 //把你自己的密码进行对称加密
@@ -87,7 +97,7 @@ namespace TinyBlog2.Controllers
             }
             else
             {
-                return Unauthorized();
+                return BadRequest(result.ToString());
             }
         }
 
