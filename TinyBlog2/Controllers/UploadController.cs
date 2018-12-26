@@ -30,8 +30,7 @@ namespace TinyBlog2.Controllers
         }
         [HttpPost]
         [Route("Create")]
-        public async Task<IActionResult> UploadAsync() {
-            var files = Request.Form.Files;
+        public async Task<IActionResult> UploadAsync(IFormFileCollection uploadFiles) {
             List<string> uploadList = new List<string>();
             TinyBlog2User currentUser = await _userManager.GetUserAsync(Request.HttpContext.User);
             System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
@@ -44,7 +43,7 @@ namespace TinyBlog2.Controllers
                 var container = client.GetContainerReference(_configuration.GetSection("StorageContainerName").Value);
                 await container.CreateIfNotExistsAsync();
 
-                foreach (var file in files)
+                foreach (var file in uploadFiles)
                 {
                     byte[] md5Value = md5.ComputeHash(file.OpenReadStream());
                     UploadFile selectedFile = _dbContext.uploadFiles.FirstOrDefault(f => f.md5 == md5Value);
