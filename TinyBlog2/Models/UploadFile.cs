@@ -12,5 +12,6 @@ namespace TinyBlog2.Models
         public TinyBlog2User User { get; set; }
         public byte[] md5 { get; set; }
         public string Uri { get; set; }
+        public string ThumbnialUri { get; set; }
     }
 }
