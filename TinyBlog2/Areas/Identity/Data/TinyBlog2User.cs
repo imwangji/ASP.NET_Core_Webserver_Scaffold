@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using TinyBlog2.Models;
 
 namespace TinyBlog2.Areas.Identity.Data
 {

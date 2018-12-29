@@ -23,6 +23,7 @@ namespace TinyBlog2.Models
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+        
         public DbSet<UploadFile> uploadFiles { get; set; }
     }
 }

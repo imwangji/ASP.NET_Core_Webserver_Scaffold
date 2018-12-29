@@ -15,6 +15,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Http.Features;
 using TinyBlog2.Middleware;
+using TinyBlog2.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace TinyBlog2
 {
@@ -36,10 +38,11 @@ namespace TinyBlog2
             {
                 c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "API Document", Version = "v1" });
             });
+            
             // JWT configuration
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
-            {
+            {   
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
@@ -51,7 +54,6 @@ namespace TinyBlog2
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };
             });
-
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("VipOnly", policy => policy.RequireClaim("Role", "VipUser"));

@@ -13,6 +13,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using TinyBlog2.Areas.Identity.Data;
 using TinyBlog2.Models;
 using System.IO;
+using System.Security.Claims;
 
 namespace TinyBlog2.Controllers
 {
@@ -46,7 +47,10 @@ namespace TinyBlog2.Controllers
                 //用于返回
                 List<UploadFile> uploadList = new List<UploadFile>();
                 //获取当前用户
-                TinyBlog2User currentUser = await _userManager.GetUserAsync(Request.HttpContext.User);
+                //TinyBlog2User currentUser = await _userManager.GetUserAsync(HttpContext.User);
+                ClaimsPrincipal claimPrincipal = new ClaimsPrincipal(HttpContext.User);
+                string userEmail = claimPrincipal.FindFirstValue("Email");
+                TinyBlog2User currentUser = await _userManager.FindByEmailAsync(userEmail);
                 //实例化一个MD5类
                 System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
 

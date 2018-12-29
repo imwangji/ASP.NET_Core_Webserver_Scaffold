@@ -10,8 +10,8 @@ using TinyBlog2.Models;
 namespace TinyBlog2.Migrations
 {
     [DbContext(typeof(TinyBlog2Context))]
-    [Migration("20181226123240_ModifyUploadFilesTable")]
-    partial class ModifyUploadFilesTable
+    [Migration("20181229154758_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

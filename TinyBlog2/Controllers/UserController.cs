@@ -44,7 +44,10 @@ namespace TinyBlog2.Controllers
                 return BadRequest(result.Errors);
             }
             //给用户增加一个Claim
-            var addClaimResult = await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("Role", "DefaultUser"));
+            var addClaimResult = await _userManager.AddClaimsAsync(user, new[] {
+                new System.Security.Claims.Claim("Role", "DefaultUser"),
+                new System.Security.Claims.Claim("Email", user.Email),
+            });
             if (result.Succeeded && addClaimResult.Succeeded)
             {
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
