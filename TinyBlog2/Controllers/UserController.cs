@@ -100,7 +100,7 @@ namespace TinyBlog2.Controllers
             }
             else
             {
-                return BadRequest(result.ToString());
+                return BadRequest();
             }
         }
 

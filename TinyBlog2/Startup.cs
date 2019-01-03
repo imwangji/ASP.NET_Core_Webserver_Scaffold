@@ -64,6 +64,15 @@ namespace TinyBlog2
                 option.BufferBody = true;
                 option.BufferBodyLengthLimit = int.MaxValue;
             });
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;//是否要求有数字
+                options.Password.RequiredLength = 6; //6位密码
+                options.Password.RequireNonAlphanumeric = false;//是否要求有大写的ASCII字母
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;//是否要求有小写的ASCII字母
+                options.Password.RequiredUniqueChars = 6;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
